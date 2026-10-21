@@ -13,6 +13,14 @@ the session key, enrollment IDs and match results are checked by libfprint.
 
 See [docs/protocol.md](docs/protocol.md) for how the reader works.
 
+> **AI-written code.** The driver, build scripts, tests, tools and docs in
+> this repository were written by Claude (Anthropic's AI) working with the
+> repository owner, who supplied the hardware, ran every test on the real
+> reader and reviewed the results. The protocol was worked out from USB
+> captures and test runs on that one reader. It hasn't been reviewed by the
+> libfprint maintainers and isn't submitted upstream. Review it yourself
+> before relying on it, especially since it handles authentication.
+
 ## Status
 
 | | |
