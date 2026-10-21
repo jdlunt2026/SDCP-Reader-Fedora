@@ -49,12 +49,13 @@ python3 -I driver/integrate.py .
 
 %install
 %meson_install
+# udev rules and, depending on the udev version, an autosuspend hwdb
+(cd %{buildroot} && find ./usr/lib/udev -type f | sed 's|^\.||') > udev.files
 
-%files
+%files -f udev.files
 %license COPYING
 %{_libdir}/libfprint-2.so.2*
 %{_libdir}/girepository-1.0/FPrint-2.0.typelib
-%{_udevrulesdir}/70-libfprint-2.rules
 %{_datadir}/metainfo/org.freedesktop.libfprint.metainfo.xml
 
 %files devel
