@@ -20,7 +20,8 @@ See [docs/protocol.md](docs/protocol.md) for how the reader works.
 | SDCP connect, certificate/signature/MAC checks | tested on the real reader (Python probe) |
 | Enroll, identify, verify | tested on the real reader (Python probe) |
 | libfprint driver | builds on libfprint 1.95.2; passes a full replay test (`tests/`) |
-| fprintd login on Fedora | **not yet tested on hardware** |
+| fprintd enroll on Fedora 44 | works on the real reader |
+| fprintd verify / login | not yet confirmed |
 
 Tested reader firmware: `bcdDevice 0.08`, model certificate issued by
 `Windows Hello 11B0C61D CA 2021`.
@@ -47,19 +48,25 @@ fprintd-verify
 sudo authselect enable-feature with-fingerprint   # login, sudo, lock screen
 ```
 
-Enrollment needs **13 touches**: one to check that the finger isn't already
-enrolled, then 12 samples.
+Enrollment takes **14 touches**: one for fprintd's own "already enrolled?"
+check, one for the reader's check, then 12 samples.
 
-### If enrollment is refused
+### One enrollment at a time: clear the reader first
 
-On the test reader, a fingerprint left on the chip by Windows Hello stopped the
-reader from starting a new enrollment. Clearing the reader's storage fixes it,
-but **also deletes Windows Hello fingerprints stored on the reader**:
+The reader only starts an enrollment while its storage is **empty**. Anything
+already stored, whether a Windows Hello fingerprint or an earlier enrollment,
+makes it refuse, and `fprintd-enroll` reports `enroll-unknown-error`. Clear it
+first. This also deletes Windows Hello fingerprints stored on the reader:
 
 ```bash
 sudo systemctl stop fprintd
 sudo python3 tools/fingerprint-clear-storage.py
+sudo systemctl start fprintd
+fprintd-enroll
 ```
+
+That means one enrolled finger at a time for now. If you re-enroll, clear the
+reader and also remove fprintd's old record with `fprintd-delete $USER`.
 
 ### Undo
 

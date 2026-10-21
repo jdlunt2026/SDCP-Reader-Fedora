@@ -997,9 +997,8 @@ enroll_run_state (FpiSsm *ssm, FpDevice *dev)
           fpi_ssm_mark_failed (ssm,
                                fpi_device_error_new_msg (FP_DEVICE_ERROR_GENERAL,
                                                          "The reader refused to start an enrollment. "
-                                                         "Fingerprints stored by another system "
-                                                         "(e.g. Windows Hello) can block this; "
-                                                         "clearing the device storage may help."));
+                                                         "It only enrolls while its storage is empty; "
+                                                         "clear the device storage and try again."));
           return;
         }
       g_clear_pointer (&self->enroll_nonce, g_bytes_unref);

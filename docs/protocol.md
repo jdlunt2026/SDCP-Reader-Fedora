@@ -104,6 +104,9 @@ identify that returned "no match", so enrollment is:
 4. `45 10 01` duplicate check, `45 0e`
 5. `85 0a f5` with `id = HMAC-SHA256(s, "enroll\0" || nonce)`
 
-On the tested reader the nonce was refused while slot 0 held a print enrolled
-by Windows Hello and issued once the storage was empty; clearing the storage
-(`05 0f ff`) fixes it.
+On the tested reader the nonce was refused every time a print was stored
+(whether from Windows Hello or an earlier Linux enrollment) and issued every
+time the storage was empty. So this firmware, as driven here, holds one
+enrollment at a time; clear the storage (`05 0f ff`) before enrolling. How
+Windows adds a second finger is not known yet (the capture only covered an
+enrollment into empty storage).

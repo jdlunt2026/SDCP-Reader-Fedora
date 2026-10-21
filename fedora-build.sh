@@ -127,9 +127,9 @@ Next steps:
   2. Test it:                fprintd-verify
   3. Enable for login/sudo:  sudo authselect enable-feature with-fingerprint
 
-If enrollment fails with "The reader refused to start an enrollment", a print
-stored by another system (e.g. Windows Hello) is probably blocking it. Clear the
-reader's storage (this also removes Windows Hello prints on the reader):
+The reader only enrolls while its storage is empty. If fprintd-enroll fails
+with enroll-unknown-error, clear it first (this also removes any Windows Hello
+fingerprints stored on the reader):
   sudo systemctl stop fprintd
   sudo python3 $REPO/tools/fingerprint-clear-storage.py
 
