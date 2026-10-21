@@ -6,7 +6,7 @@
 
 Name:           libfprint
 Version:        1.95.2
-Release:        0.rtksdcp1%{?dist}
+Release:        0.rtksdcp2%{?dist}
 Summary:        Toolkit for fingerprint scanner (with realtek_sdcp driver)
 
 License:        LGPL-2.1-or-later
@@ -65,5 +65,8 @@ python3 -I driver/integrate.py .
 %{_datadir}/gir-1.0/FPrint-2.0.gir
 
 %changelog
+* Wed Oct 21 2026 Jared Lunt <jdlunt2026@users.noreply.github.com> - 1.95.2-0.rtksdcp2
+- realtek_sdcp: don't USB-reset the reader on open; it can drop off the bus
+
 * Wed Oct 21 2026 Jared Lunt <jdlunt2026@users.noreply.github.com> - 1.95.2-0.rtksdcp1
 - libfprint 1.95.2 with the realtek_sdcp driver for USB 2c0a:5816

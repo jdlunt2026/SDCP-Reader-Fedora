@@ -520,8 +520,9 @@ dev_open (FpSdcpDevice *sdcp_device)
 
   G_DEBUG_HERE ();
 
-  if (!g_usb_device_reset (fpi_device_get_usb_device (dev), &error) ||
-      !g_usb_device_claim_interface (fpi_device_get_usb_device (dev), 0, 0, &error))
+  /* No USB reset here (unlike the plain realtek driver): the Windows driver
+   * never resets this firmware, and a reset can make it drop off the bus. */
+  if (!g_usb_device_claim_interface (fpi_device_get_usb_device (dev), 0, 0, &error))
     {
       fpi_sdcp_device_open_complete (sdcp_device, error);
       return;
