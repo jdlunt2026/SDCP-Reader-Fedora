@@ -21,7 +21,7 @@ See [docs/protocol.md](docs/protocol.md) for how the reader works.
 | Enroll, identify, verify | tested on the real reader (Python probe) |
 | libfprint driver | builds on libfprint 1.95.2; passes a full replay test (`tests/`) |
 | fprintd enroll on Fedora 44 | works on the real reader |
-| fprintd verify / login | not yet confirmed |
+| fprintd verify, GNOME lock screen unlock | works on the real reader |
 
 Tested reader firmware: `bcdDevice 0.08`, model certificate issued by
 `Windows Hello 11B0C61D CA 2021`.
